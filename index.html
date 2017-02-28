@@ -1,0 +1,442 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+<title>jQuery Mobile 網路應用程式</title>
+<link href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css"/>
+<script src="http://code.jquery.com/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js" type="text/javascript"></script>
+<script src="que1.js">
+</script>
+<script src="que2.js">
+</script>
+<script src="que3.js">
+</script>
+<script src="que4.js">
+</script>
+<script src="que5.js">
+</script>
+<style>
+.gli{
+	background-color:#FCC}
+.bli{
+	background-color:#FF6;}
+
+#testquestion {
+	background-color:#FFC;
+	border:#39F solid 3px;
+	border-radius:5px;
+	font-size:23px;
+	font-family:"標楷體";
+	height:auto;
+	}
+#judge {background-color:#FFC;
+border:#39F solid 3px;
+	border-radius:5px;
+	font-size:23px;
+	font-family:"標楷體";
+width:250px;
+height:auto;
+}
+.libg2{
+	background-color:#FCC;
+	font-size:18px;
+	border:#6CF solid 3px;
+	border-radius:5px;}
+.libg1{
+	background-color:#6CC;
+	font-size:18px;
+	border:#fCc solid 2px;
+	border-radius:5px;
+	}	
+.libg3{
+	background-color:#6CF;
+	font-size:25px;
+	border:#6CF solid 2px;
+	border-radius:5px;
+	}
+ #chooseitem_0,#chooseitem_1,#chooseitem_2,#chooseitem_3{
+	height:40px;
+	font-size:20px;
+	border:#000 1px solid;
+	text-align:left;
+	font-family:"標楷體";
+	background-color:#CF9;
+}
+a {
+	text-decoration:none;
+	}
+li a center{
+	height:20px;
+	font-size:20px;
+	}
+sapn {
+	background-color:#69F;}
+</style>
+<script>
+$(function(){
+var que=[];
+var realque=[];
+var concatarray=[];
+var unit1yes=false;
+var unit2yes=false;
+var unit3yes=false;
+var unit4yes=false;
+var unit5yes=false;
+var concatarray=[];
+var numbarray=[];
+var quenumb=0;
+var questring="";
+var clcikyesno;
+var questionindex=0;
+var ans;
+var totalscore=0;
+var queright=[];
+var eachscore=0;
+$("#q1").bind("click",function(){
+	var s1="<a href='#page2'>back</a>";
+	var s=s1+"<center><h1>作業準備-單元</h1></center>";
+	$("#itemlist").html(s);
+	showque(1)});
+$("#q2").bind("click",function(){
+	var s1="<a href='#page2'>back</a>";
+var s=s1+"<center><h1>應用軟體安裝及使用-單元</h1></center>";
+	$("#itemlist").html(s);
+	showque(2)});
+$("#q3").bind("click",function(){
+	var s1="<a href='#page2'>back</a>";
+var s=s1+"<center><h1>系統軟體安裝及使用-單元</h1></center>";
+	$("#itemlist").html(s);
+	showque(3)});
+$("#q4").bind("click",function(){
+	var s1="<a href='#page2'>back</a>";
+	var s=s1+"<center><h1>資訊及安全-單元</h1></center>";
+	$("#itemlist").html(s);
+	showque(4)});
+$("#q5").bind("click",function(){
+	var s1="<a href='#page2'>back</a>";
+	var s=s1+"<center><h1>職業道德-單元</h1></center>";
+	$("#itemlist").html(s);
+	showque(5)});
+$("#unit1").bind("click",function(){
+	unit1yes=!unit1yes;//alert(unit1yes);
+	})
+$("#unit2").bind("click",function(){
+	unit2yes=!unit2yes;
+	})
+$("#unit3").bind("click",function(){
+	unit3yes=!unit3yes;
+	})
+	$("#unit4").bind("click",function(){
+	unit4yes=!unit4yes;
+	})
+	$("#unit5").bind("click",function(){
+	unit5yes=!unit5yes;
+	})
+$("#startans").bind("click",function(){putpreque()});
+$("#result").click(function(e) {
+		putresult();//alert(99);
+        $.mobile.changePage("#resultpage");
+		
+    });
+ function showque(n){
+	 
+	 if(n==1){que=que1};
+	 if(n==2){que=que2};
+	 if(n==3){que=que3};
+	 if(n==4){que=que4};
+	 if(n==5){que=que5};
+	 var len=que.length;var s="";
+	 for(var i=0;i<len;i++){
+		 var ans=que[i].ans;
+	var s1=que[i].ans1;
+	var s2=que[i].ans2;
+	var s3=que[i].ans3;
+	var s4=que[i].ans4;
+if(ans==1){s1="<span style='background-color:#6cf'>"+s1+"</span>"}
+if(ans==2){s2="<span style='background-color:#6cf'>"+s2+"</span>"}
+if(ans==3){s3="<span style='background-color:#6cf'>"+s3+"</span>"}
+if(ans==4){s4="<span style='background-color:#6cf'>"+s4+"</span>"}
+	if(i%2==0){	 
+	
+	s=s+"<li class='gli'>第"+(i+1)+"題.答案:"+ans+que[i].que+"(1)"+s1+"(2)"+s2+"(3)"+s3+"(4)"+s4+"</li><br>";}else{
+		s=s+"<li class='bli'>第"+(i+1)+"題.答案:"+ans+que[i].que+"(1)"+s1+"(2)"+s2+"(3)"+s3+"(4)"+s4+"</li><br>";
+		}//if
+	var im=que[i].img;
+	if(im!=null){
+		s=s+"<img src=img/"+im+">";
+		}
+	 }//for
+	$("#question").html(s);
+	$.mobile.changePage("#showque");
+ }//showque function
+	
+function putpreque(){
+		concatarray.length=0;totalscore=0;
+if(unit1yes){concatarray=concatarray.concat(que1)};
+if(unit2yes){concatarray=concatarray.concat(que2)};
+if(unit3yes){concatarray=concatarray.concat(que3)};
+if(unit4yes){concatarray=concatarray.concat(que4)};
+if(unit5yes){concatarray=concatarray.concat(que5)};
+	//alert(concatarray.length);
+quenumb=$("#selectquenumb").val();
+//alert(quenumb);
+	for(var i=0;i<concatarray.length;i++){
+		numbarray[i]=i;
+		}
+randomchooseque();putque();
+$.mobile.changePage("#testroom");//alert(questring);
+		//realque=concatarray;
+		}//function
+		
+function randomchooseque(){
+	queright.length=0;questionindex=0;
+	realque.length=0;eachscore=100/quenumb;
+	var min=0;var max=concatarray.length;
+	for(var i=0;i<quenumb;i++){
+	var t=Math.round(Math.random()*(max-min+1))+min;//alert(numbarray[t]);
+		var choosenumb=numbarray[t];
+		numbarray[t]=numbarray[max];
+	max-=1;//alert(concatarray[choosenumb].que);
+realque.push(concatarray[choosenumb]);
+		};//alert(realque[0].que);
+	}//function
+function putque(){
+	clickyesno="yes";//alert(99);
+$("#chooseitem_0").css("background-color","#CF9");
+$("#chooseitem_1").css("background-color","#CF9");
+$("#chooseitem_2").css("background-color","#CF9");
+$("#chooseitem_3").css("background-color","#CF9");
+var quest="共"+quenumb+"題目前第"+(questionindex+1)+"題:<br>"+realque[questionindex].que;
+$("#testquestion").html(quest);//alert(quest);
+$("#choose0label").html("<div>A:"+realque[questionindex].ans1+"</div>");
+
+$("#choose1label").html("<div>B:"+realque[questionindex].ans2+"</div>");
+
+$("#choose2label").html("<div>C:"+realque[questionindex].ans3+"</div>");
+
+$("#choose3label").html("<div>D:"+realque[questionindex].ans4+"</div>");
+var im=realque[questionindex].img;
+if(im!=null){
+var im="img/"+im
+$("#imgdiv").attr("src",im);
+$("#imgdiv").show();
+}else{
+	$("#imgdiv").hide();	
+	}
+
+ans=realque[questionindex].ans;
+st="目前分數為:"+totalscore+"分";			
+		$("#judge").html(st);
+	
+	}
+	
+$("#chooseitem_0").click(function(e) {
+   if(clickyesno=="yes"){ check(1);clickyesno="no"}
+   
+});
+$("#chooseitem_1").click(function(e) {
+    if(clickyesno=="yes"){check(2);clickyesno="no"}
+});
+$("#chooseitem_2").click(function(e) {
+    if(clickyesno=="yes"){check(3);clickyesno="no"}
+});
+//$("#chooseitem_3").attr("checked",false);
+$("#chooseitem_3").click(function(e) {
+    if(clickyesno=="yes"){check(4);clickyesno="no"}
+});	//function
+
+function check(anspass){
+	var t;questionindex++;
+	clickyesno="yes";
+if(ans==1){$("#chooseitem_0").css("background-color","#aaf");t="A";};
+if(ans==2){$("#chooseitem_1").css("background-color","#aaf");t="B";};
+if(ans==3){$("#chooseitem_2").css("background-color","#aaf");t="C";};
+if(ans==4){$("#chooseitem_3").css("background-color","#aaf");t="D";};
+	if(anspass==ans){
+		totalscore+=eachscore;
+st="YES答對了!目前分數為:"+totalscore+"分答案為:"+t;
+		$("#judge").html(st);
+		queright.push(1);
+		}else{
+st="NO答錯了!目前分數為:"+totalscore+"分答案為:"+t;			
+		$("#judge").html(st);
+		queright.push(0);	
+			}//if
+if(quenumb==questionindex){
+	alert("結束!看結果!");
+	$("#nextque").unbind("click");
+	return;
+	};
+$("#nextque").click(function(e) {
+	putque();//able();
+	
+});
+
+	}//function
+	
+function putresult(){
+	//alert(queright.length);
+	var s="",s1,sans;
+	var k=0;
+	//if(pageshownumb==1){
+		s1="總分:100分得分:"+totalscore+"分";
+		$("#scoreresult").html(s1);
+//alert(totalscore);
+for(var i=0;i<questionindex;i++){
+		k++;
+if(realque[i].ans==1){sans=realque[i].ans1};
+if(realque[i].ans==2){sans=realque[i].ans2};
+	if(realque[i].ans==3){sans=realque[i].ans3};
+	if(realque[i].ans==4){sans=realque[i].ans3};
+if(queright[i]==1){
+s=s+k+"<div class='libg1'>答對:"+realque[i].que+":"+sans+"</div>"
+		}else{
+s=s+k+"<div class='libg2'>答錯:"+realque[i].que+":"+sans+"</div>"	
+			}
+		
+		}
+$("#rightlist").html(s);
+//alert(questionindex);
+	}//function
+function clearqueright(){
+	if(queright.length!=0){
+		
+		queright.length=0;
+		}//}
+		//alert(99);//alert(queright.length);
+	}//function
+	})
+
+</script>
+</head> 
+<body> 
+
+<div data-role="page" id="page" data-theme="b">
+	<div data-role="header" data-theme="b">
+		<h1>網頁設計丙級學科測驗練習</h1>
+        <div data-role="navbar">	
+		<ul >
+			<li><a href="#page2"><center>檢視題目</center></a></li>
+            <li><a href="#testchoose"><center>測驗練習</center></a></li>
+			
+		</ul></div>	
+	</div>
+	<div data-role="content">
+    	<p class="divcenter" style="text-align:center"><img src="img/hslogo.gif" width="213" height="180"></p>
+    <p style="font-size:23px;font-family:'標楷體'">新北高工資處科課科程分商業類及電腦類,商業課程含商概,經濟學,會計學等,電腦類含計概,程式語言,文書,多媒體等,其中網頁設計丙級檢定為必考之科目.此app為收集丙級學科作考題作為練習,其中檢視題目為各單元的題目收集作為閱讀用,測驗練習則為各單元的隨機題目練習.</p>
+	</div>
+	<div data-role="footer" data-theme="b">
+		<h4>新北高工資處科</h4>
+	</div>
+</div>
+
+<div data-role="page" id="page2" >
+	<div data-role="header" data-theme="e" >
+	<a href="#page">back</a><h1>選擇單元</h1>
+	</div>
+	<div data-role="content">	
+		<ul data-role="listview">
+			<li id="q1"><a href="#">作業準備-單元</a></li>
+            <li id="q2"><a href="#">應用軟體安裝及使用-單元</a></li>
+			<li id="q3"><a href="#">系統軟體安裝及使用-單元</a></li>
+            <li id="q4"><a href="#">資訊及安全-單元</a></li>
+            <li id="q5"><a href="#">職業道德-單元</a></li>
+		</ul>			
+	</div>
+	<div data-role="footer" data-theme="e">
+		<h4>新北高工資處科</h4>
+	</div>
+</div>
+
+<div data-role="page" id="showque">
+	<div data-role="header" id="itemlist" data-theme="b">
+		
+	</div>
+	<div data-role="content">	
+		<div id="question">
+        
+        </div>	
+	</div>
+	<div data-role="footer" data-theme="b">
+		<h4>新北高工資處科</h4>
+	</div>
+</div>
+
+<div data-role="page" id="testchoose" >
+	<div data-role="header" data-theme="e">
+		<a href="#page">back</a><h1>選擇單元及題數可複選</h1>
+	</div>
+	<div data-role="content">
+	 
+	    <div data-role="fieldcontain">
+	        <fieldset data-role="controlgroup" data-type="vertical">
+	          <legend>單元:</legend>
+	<input type="checkbox" name="checkbox1" id="unit1" class="custom" value="que1" />
+	  <label for="unit1">作業準備-單元</label>
+	          <input type="checkbox" name="checkbox1" id="unit2" class="custom" value="que2" />
+	   <label for="unit2">應用軟體安裝及使用-單元</label>
+	          <input type="checkbox" name="checkbox1" id="unit3" class="custom" value="que3" />
+	  <label for="unit3">系統軟體安裝及使用-單元</label>
+	          <input type="checkbox" name="checkbox1" id="unit4" class="custom" value="que4" />
+	          <label for="unit4">資訊及安全-單元</label>
+	          <input type="checkbox" name="checkbox1" id="unit5" class="custom" value="que5" />
+	          <label for="unit5">職業道德-單元</label>
+            </fieldset>
+        
+	      <label for="selectmenu" class="select">題數:</label>
+	      <select name="selectmenu" id="selectquenumb">
+        <option value="10">10題</option>  
+	        <option value="25">25題</option>
+	        <option value="50">50題</option>
+          </select>
+       
+<a href="#" data-role="button" id="startans">開始作答</a>      
+        </div>
+	</div>
+    
+	<div data-role="footer" data-theme="e">
+		<h4>新北高工資處科</h4>
+	</div>
+</div>
+<div data-role="page" id="testroom">
+	<div data-role="header" data-theme="e">
+	<a href="#testchoose">back</a><h1>測驗教室</h1>
+	</div>
+	<div data-role="content">	
+		 <div id="testquestion"></div>
+    <p><br>
+   <center> <div data-role="listview" data-inset="true" class="ui-bar-c">
+    <div id="chooseitem_0"><a href="#" id="choose0label" >頁面</a></div>
+      <div id="chooseitem_1"><a href="#" id="choose1label" >頁面</a></div>
+      <div id="chooseitem_2"><a href="#" id="choose2label" >頁面</a></div>
+      <div id="chooseitem_3"><a href="#" id="choose3label">頁面</a></div>
+    </div></center>
+<a href="#" data-role="button" class="ui-btn-inline" id="nextque">下一題--(選完才可下一題)</a>
+	<div id="judge">請選擇!</div>			
+	<a href="#" data-role="button" class="ui-btn-inline" id="result" class="libg1">看結果</a>
+<div><img src="" id=imgdiv></div>
+      	
+	</div>
+	<div data-role="footer" data-theme="e">
+		<h4>新北高工資處科</h4>
+	</div>
+</div>
+<div data-role="page" id="resultpage" data-theme="e">
+	<div data-role="header" data-theme="e">
+		<h1>試題結果</h1>
+       <div id="b2"> <a href="#testroom"  class="ui-btn ui-icon-back ui-btn-icon-left">Back</a></div>
+	</div>
+	<div data-role="content">
+    <div id="result" class="libg3">結果:</div>
+<div id="rightlist">
+	    
+      </div>	
+				
+	</div>
+	<div data-role="footer" data-theme="e">
+		<h4>新北高工資料處理科</h4>
+	</div>
+</div>
+</body>
+</html>
